@@ -3,995 +3,878 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Oficial SCJ - República de Brookasil</title>
+    <title>SCJ Brookasil | Portal Oficial - Edição 2026</title>
     
+    <meta name="description" content="Portal Oficial do Supremo Conselho Judicial da República de Brookasil. Denúncias, Transparência e Justiça.">
+    <meta name="theme-color" content="#009E60">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,700;1,300&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
     <style>
-        /* * ==========================================
-         * 🎨 VARIÁVEIS DE TEMA (GABON FLAG INSPIRED)
-         * ==========================================
-         */
+        /* =======================================================================
+        🎨 CSS CORE - VARIÁVEIS E TEMA INSTITUCIONAL (GABÃO PALETTE)
+        =======================================================================
+        */
         :root {
-            /* Cores Oficiais */
-            --scj-green: #009E60;   /* Esperança e Justiça */
-            --scj-yellow: #FCD116;  /* Riqueza e Autoridade */
-            --scj-blue: #3A75C4;    /* Mar e Institucional */
+            /* Cores da Bandeira do Gabão (Identidade SCJ) */
+            --color-scj-green: #009E60;   /* Verde Floresta - Base */
+            --color-scj-yellow: #FCD116;  /* Amarelo Sol - Destaques */
+            --color-scj-blue: #3A75C4;    /* Azul Mar - Ações */
             
-            /* Tons Derivados para UI */
-            --scj-dark-blue: #1A2B45;
-            --scj-dark-green: #004d2e;
-            --scj-gold: #D4AF37;
-            
-            /* Neutros */
-            --text-dark: #1F2937;
-            --text-light: #F9FAFB;
-            --bg-light: #F3F4F6;
-            --bg-white: #FFFFFF;
-            --border-color: #E5E7EB;
+            /* Tons Derivados e Neutros */
+            --color-scj-dark: #004d2e;
+            --color-text-main: #1a1a1a;
+            --color-text-muted: #666666;
+            --color-bg-body: #f4f6f9;
+            --color-bg-card: #ffffff;
+            --color-border: #e0e0e0;
+            --color-error: #d32f2f;
+            --color-success: #2e7d32;
 
             /* Tipografia */
-            --font-serif: 'Merriweather', serif;
-            --font-sans: 'Roboto', sans-serif;
+            --font-display: 'Cinzel', serif;      /* Títulos Imponentes */
+            --font-body: 'Inter', sans-serif;     /* Interface */
+            --font-legal: 'Merriweather', serif;  /* Textos Jurídicos */
+
+            /* Efeitos */
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 16px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-        /* Modo Alto Contraste */
+        /* Tema de Alto Contraste (Acessibilidade) */
         body.high-contrast {
-            --scj-green: #000000;
-            --scj-yellow: #FFFF00;
-            --scj-blue: #00008B;
-            --scj-dark-blue: #000000;
-            --text-dark: #000000;
-            --text-light: #FFFFFF;
-            --bg-light: #FFFFFF;
-            --bg-white: #FFFFFF;
+            --color-scj-green: #000000;
+            --color-scj-yellow: #FFD700;
+            --color-scj-blue: #0000FF;
+            --color-text-main: #000000;
+            --color-text-muted: #000000;
+            --color-bg-body: #FFFFFF;
+            --color-bg-card: #FFFFFF;
+            --color-border: #000000;
         }
 
-        /* * ==========================================
-         * 🛠️ RESET E BASE
-         * ==========================================
-         */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* Reset e Base */
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
+        
+        html { scroll-behavior: smooth; font-size: 100%; }
         
         body {
-            font-family: var(--font-sans);
-            background-color: var(--bg-light);
-            color: var(--text-dark);
+            font-family: var(--font-body);
+            background-color: var(--color-bg-body);
+            color: var(--color-text-main);
             line-height: 1.6;
-            transition: all 0.3s ease;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 10% 20%, rgba(0, 158, 96, 0.05) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(58, 117, 196, 0.05) 0%, transparent 20%);
         }
 
-        h1, h2, h3, h4 { font-family: var(--font-serif); }
-
-        /* Utilitários */
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        /* =======================================================================
+        🧩 COMPONENTES DE UI
+        =======================================================================
+        */
+        
+        /* Botões */
         .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            border-radius: 4px;
-            border: none;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.2s;
-            font-size: 0.95rem;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 12px 24px; border: none; border-radius: var(--radius-sm);
+            font-weight: 600; cursor: pointer; transition: var(--transition);
+            text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.9rem;
         }
-        .btn-primary { background: var(--scj-dark-blue); color: white; }
-        .btn-primary:hover { background: var(--scj-blue); }
-        .btn-secondary { background: var(--scj-green); color: white; }
-        .btn-secondary:hover { background: var(--scj-dark-green); }
-        .btn-outline { border: 1px solid var(--scj-dark-blue); color: var(--scj-dark-blue); background: transparent; }
-        
+        .btn-primary { background: var(--color-scj-blue); color: white; box-shadow: 0 4px 6px rgba(58, 117, 196, 0.2); }
+        .btn-primary:hover { background: #2a5a9c; transform: translateY(-2px); }
+        .btn-accent { background: var(--color-scj-yellow); color: var(--color-scj-dark); }
+        .btn-accent:hover { background: #e6be00; }
+        .btn-outline { background: transparent; border: 2px solid var(--color-scj-green); color: var(--color-scj-green); }
+        .btn-danger { background: var(--color-error); color: white; }
+
+        /* Cards */
         .card {
-            background: var(--bg-white);
-            border-radius: 8px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            background: var(--color-bg-card);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
             padding: 24px;
-            border-top: 4px solid var(--scj-gold);
             margin-bottom: 20px;
+            border-top: 4px solid var(--color-scj-green);
+            position: relative;
         }
 
-        /* * ==========================================
-         * 🏛️ CABEÇALHO E NAVEGAÇÃO
-         * ==========================================
-         */
-        header {
-            background: linear-gradient(to right, var(--scj-dark-blue), var(--scj-blue));
-            color: white;
-            padding: 15px 0;
-            border-bottom: 5px solid var(--scj-yellow);
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo-icon {
-            font-size: 3rem;
-            color: var(--scj-yellow);
-        }
-
-        .titles h1 { font-size: 1.5rem; font-weight: 900; letter-spacing: 1px; }
-        .titles h2 { font-size: 0.8rem; font-weight: 300; text-transform: uppercase; letter-spacing: 2px; }
-
-        .top-bar {
-            background: var(--scj-dark-green);
-            color: white;
-            font-size: 0.8rem;
-            padding: 5px 0;
-            text-align: center;
-        }
-
-        nav {
-            background: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        nav a {
-            display: block;
-            padding: 15px 25px;
-            text-decoration: none;
-            color: var(--scj-dark-blue);
-            font-weight: 600;
-            font-size: 0.9rem;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s;
-        }
-
-        nav a:hover, nav a.active {
-            background: rgba(58, 117, 196, 0.1);
-            border-bottom-color: var(--scj-green);
-        }
-
-        /* * ==========================================
-         * ♿ ACESSIBILIDADE
-         * ==========================================
-         */
-        .access-panel {
-            background: #f0f0f0;
-            border-bottom: 1px solid #ddd;
-            padding: 10px 0;
-            display: none; /* JS toggles this */
-        }
-        
-        .access-controls {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        .access-btn {
-            background: white;
-            border: 1px solid #ccc;
-            padding: 5px 10px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            border-radius: 4px;
-        }
-
-        /* * ==========================================
-         * 📄 CONTEÚDO PRINCIPAL (SPA SECTIONS)
-         * ==========================================
-         */
-        main { padding: 40px 0; min-height: 70vh; }
-        
-        .page-section { display: none; animation: fadeIn 0.5s; }
-        .page-section.active { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        .hero h2 { font-size: 2.5rem; color: var(--scj-dark-blue); margin-bottom: 10px; }
-        .hero p { color: #666; max-width: 600px; margin: 0 auto; }
-
-        /* Formulários */
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: 500; color: var(--scj-dark-blue); }
+        /* Inputs */
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; color: var(--color-scj-dark); }
         .form-control {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-family: var(--font-sans);
+            width: 100%; padding: 12px; border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm); font-family: var(--font-body);
+            transition: var(--transition); background: #f9f9f9;
         }
-        .form-control:focus { outline: none; border-color: var(--scj-blue); box-shadow: 0 0 0 3px rgba(58,117,196,0.1); }
-        
-        textarea.form-control { min-height: 120px; resize: vertical; }
+        .form-control:focus { border-color: var(--color-scj-blue); background: #fff; box-shadow: 0 0 0 3px rgba(58, 117, 196, 0.1); }
+        textarea.form-control { resize: vertical; min-height: 120px; }
 
-        /* Termo de Responsabilidade */
-        .term-box {
-            background: #FFF9C4;
-            padding: 15px;
-            border-left: 4px solid var(--scj-yellow);
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-        }
-
-        /* Tabela e Listas */
-        .data-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-        
+        /* Badges de Status */
         .status-badge {
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
+            padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
         }
-        .status-recebida { background: #E0E0E0; color: #333; }
-        .status-analise { background: #FFF3CD; color: #856404; }
-        .status-julgada { background: #D4EDDA; color: #155724; }
-        .status-arquivada { background: #F8D7DA; color: #721C24; }
-
-        /* Painel Admin */
-        .admin-login-wrapper { max-width: 400px; margin: 0 auto; }
-        .admin-dashboard { display: none; }
-        
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.9rem; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
-        th { background: var(--scj-dark-blue); color: white; }
-        tr:hover { background-color: #f9f9f9; }
-
-        /* Notas Oficiais */
-        .nota-oficial {
-            border-left: 5px solid var(--scj-green);
-            background: white;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        .nota-header { border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px; }
-        .nota-meta { color: #666; font-size: 0.85rem; font-style: italic; }
-        .nota-body { font-size: 1.1rem; text-align: justify; }
-        .nota-footer { margin-top: 20px; text-align: right; font-weight: bold; font-family: var(--font-serif); }
-
-        /* Rodapé */
-        footer {
-            background: var(--scj-dark-blue);
-            color: white;
-            padding: 40px 0 20px;
-            margin-top: auto;
-            border-top: 5px solid var(--scj-yellow);
-        }
-        .footer-content { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 30px; }
-        .footer-col h4 { color: var(--scj-yellow); margin-bottom: 15px; }
-        .copyright { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.8rem; }
+        .status-recebida { background: #eee; color: #555; }
+        .status-analise { background: #fff8e1; color: #f57c00; border: 1px solid #ffe0b2; }
+        .status-julgada { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
+        .status-arquivada { background: #ffebee; color: #c62828; }
 
         /* Toast Notification */
+        #toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 9999; }
         .toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #333;
-            color: white;
-            padding: 15px 25px;
-            border-radius: 4px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            transform: translateY(100px);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 1000;
+            background: white; padding: 15px 20px; border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-lg); margin-top: 10px; display: flex; align-items: center; gap: 10px;
+            animation: slideIn 0.3s ease-out; border-left: 5px solid var(--color-scj-green);
         }
-        .toast.show { transform: translateY(0); }
-        .toast.success { border-left: 5px solid var(--scj-green); }
-        .toast.error { border-left: 5px solid #dc3545; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
-        /* Responsividade */
+        /* =======================================================================
+        🏛️ LAYOUT & ESTRUTURA
+        =======================================================================
+        */
+        
+        /* Header */
+        header {
+            background: white; border-bottom: 5px solid transparent;
+            border-image: linear-gradient(to right, var(--color-scj-green) 33%, var(--color-scj-yellow) 33%, var(--color-scj-yellow) 66%, var(--color-scj-blue) 66%) 1;
+            position: sticky; top: 0; z-index: 1000; box-shadow: var(--shadow-md);
+        }
+
+        .top-bar {
+            background: var(--color-scj-dark); color: white; padding: 5px 0; font-size: 0.8rem; text-align: center; letter-spacing: 1px;
+        }
+
+        .header-main {
+            display: flex; justify-content: space-between; align-items: center; padding: 15px 5%;
+            max-width: 1400px; margin: 0 auto;
+        }
+
+        .brand-area { display: flex; align-items: center; gap: 15px; }
+        
+        /* LOGO DO USUÁRIO */
+        .logo-img { height: 80px; width: auto; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
+        
+        .brand-text h1 { font-family: var(--font-display); font-size: 1.8rem; color: var(--color-scj-dark); line-height: 1.1; }
+        .brand-text p { font-size: 0.85rem; color: var(--color-scj-blue); text-transform: uppercase; font-weight: 700; letter-spacing: 2px; }
+
+        /* Navegação */
+        nav ul { display: flex; list-style: none; gap: 5px; }
+        nav a {
+            text-decoration: none; color: var(--color-text-main); padding: 10px 15px;
+            font-weight: 600; border-radius: var(--radius-sm); transition: var(--transition);
+            display: flex; align-items: center; gap: 5px; font-size: 0.9rem;
+        }
+        nav a:hover, nav a.active { background: rgba(0, 158, 96, 0.1); color: var(--color-scj-green); }
+        nav a.active { box-shadow: inset 0 -2px 0 var(--color-scj-green); }
+
+        /* Main Container */
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; min-height: 80vh; }
+        .view-section { display: none; animation: fadeIn 0.5s ease; }
+        .view-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Footer */
+        footer { background: #222; color: #fff; padding: 60px 0 20px; margin-top: 60px; text-align: center; border-top: 10px solid var(--color-scj-yellow); }
+        .footer-logo { height: 60px; opacity: 0.8; margin-bottom: 20px; }
+        
+        /* Acessibilidade Panel */
+        .accessibility-bar {
+            display: flex; gap: 10px; align-items: center;
+        }
+        .access-btn {
+            background: transparent; border: 1px solid var(--color-border); border-radius: 50%;
+            width: 36px; height: 36px; display: flex; justify-content: center; align-items: center;
+            cursor: pointer; color: var(--color-text-muted); transition: var(--transition);
+        }
+        .access-btn:hover { background: var(--color-scj-green); color: white; border-color: var(--color-scj-green); }
+
+        /* =======================================================================
+        📂 ÁREAS ESPECÍFICAS
+        =======================================================================
+        */
+        
+        /* Home */
+        .hero-banner {
+            background: linear-gradient(135deg, var(--color-scj-dark) 0%, #002d1b 100%);
+            color: white; padding: 60px 40px; border-radius: var(--radius-lg); text-align: center;
+            margin-bottom: 40px; position: relative; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 77, 46, 0.4);
+        }
+        .hero-banner::before {
+            content: "2026"; position: absolute; font-size: 15rem; opacity: 0.05; font-family: var(--font-display);
+            top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none;
+        }
+        
+        /* Denúncia Form */
+        .file-drop-area {
+            border: 2px dashed var(--color-scj-blue); padding: 30px; text-align: center;
+            border-radius: var(--radius-md); background: #f0f7ff; cursor: pointer; transition: var(--transition);
+        }
+        .file-drop-area:hover { background: #e1efff; }
+        
+        /* Modal de Login Admin */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);
+            z-index: 2000; display: none; align-items: center; justify-content: center;
+        }
+        .modal-box {
+            background: white; width: 90%; max-width: 400px; padding: 30px;
+            border-radius: var(--radius-md); box-shadow: var(--shadow-lg); text-align: center;
+            border-top: 5px solid var(--color-scj-yellow);
+        }
+
+        /* Tabela Admin */
+        .admin-dashboard { display: grid; grid-template-columns: 250px 1fr; gap: 30px; }
+        .admin-sidebar { background: white; padding: 20px; border-radius: var(--radius-md); height: fit-content; box-shadow: var(--shadow-sm); }
+        .menu-btn { width: 100%; text-align: left; padding: 12px; border: none; background: transparent; cursor: pointer; border-radius: var(--radius-sm); margin-bottom: 5px; }
+        .menu-btn:hover, .menu-btn.active-tab { background: #f0f0f0; color: var(--color-scj-blue); font-weight: bold; }
+
+        /* Mobile */
         @media (max-width: 768px) {
-            .header-content { flex-direction: column; text-align: center; }
-            nav ul { flex-direction: column; }
-            nav a { text-align: center; border-bottom: 1px solid #eee; }
+            .header-main { flex-direction: column; gap: 15px; }
+            nav ul { flex-wrap: wrap; justify-content: center; }
+            .admin-dashboard { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
     <div class="top-bar">
-        REPÚBLICA DE BROOKASIL — DEMOCRACIA, JUSTIÇA E LIBERDADE
+        REPÚBLICA DE BROOKASIL — ORDEM, PROGRESSO E JUSTIÇA CONSTITUCIONAL — ANO 2026
     </div>
 
     <header>
-        <div class="container header-content">
-            <div class="logo-area">
-                <i class="ph ph-scales logo-icon"></i>
-                <div class="titles">
-                    <h2>Supremo Conselho Judicial</h2>
-                    <h1>SCJ - BROOKASIL</h1>
+        <div class="header-main">
+            <div class="brand-area">
+                <img src="1000255548.jpg" alt="Brasão do Supremo Conselho Judicial" class="logo-img">
+                <div class="brand-text">
+                    <h1>SCJ</h1>
+                    <p>Supremo Conselho Judicial</p>
                 </div>
             </div>
-            <div class="header-actions">
-                <button class="btn btn-outline" style="border-color:white; color: white;" onclick="toggleLang()">
-                    <i class="ph ph-globe"></i> <span id="lang-btn">PT/EN</span>
-                </button>
-                <button class="btn btn-outline" style="border-color:var(--scj-yellow); color: var(--scj-yellow);" onclick="toggleAccessibility()">
-                    <i class="ph ph-wheelchair"></i> <span data-i18n="accessibility">Acessibilidade</span>
-                </button>
+
+            <div class="accessibility-bar">
+                <select id="lang-select" class="form-control" style="width: auto; padding: 5px 10px;" aria-label="Selecionar Idioma">
+                    <option value="pt">🇧🇷 PT</option>
+                    <option value="en">🇺🇸 EN</option>
+                </select>
+                <div style="width: 1px; height: 20px; background: #ddd; margin: 0 5px;"></div>
+                <button class="access-btn" onclick="AccessSystem.toggleContrast()" title="Alto Contraste"><span class="material-symbols-outlined">contrast</span></button>
+                <button class="access-btn" onclick="AccessSystem.changeFont(1)" title="Aumentar Fonte"><span class="material-symbols-outlined">text_increase</span></button>
+                <button class="access-btn" onclick="AccessSystem.changeFont(-1)" title="Diminuir Fonte"><span class="material-symbols-outlined">text_decrease</span></button>
+                <button class="access-btn" onclick="AccessSystem.readingMode()" title="Modo Leitura"><span class="material-symbols-outlined">chrome_reader_mode</span></button>
             </div>
         </div>
+
+        <nav class="container" style="margin: 10px auto; min-height: auto;">
+            <ul>
+                <li><a href="#" onclick="Router.go('home')" class="active" data-i18n="menu_home"><span class="material-symbols-outlined">home</span> INÍCIO</a></li>
+                <li><a href="#" onclick="Router.go('denuncia')" data-i18n="menu_denounce"><span class="material-symbols-outlined">gavel</span> DENUNCIAR</a></li>
+                <li><a href="#" onclick="Router.go('consulta')" data-i18n="menu_consult"><span class="material-symbols-outlined">search</span> CONSULTA PÚBLICA</a></li>
+                <li><a href="#" onclick="Router.go('admin')" data-i18n="menu_admin"><span class="material-symbols-outlined">lock</span> ÁREA RESTRITA</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <nav>
-        <div class="container">
-            <ul>
-                <li><a href="#" onclick="navigate('home')" class="active" data-i18n="nav_home">Início</a></li>
-                <li><a href="#" onclick="navigate('denunciar')" data-i18n="nav_denounce">Realizar Denúncia</a></li>
-                <li><a href="#" onclick="navigate('consulta')" data-i18n="nav_consult">Consulta Pública</a></li>
-                <li><a href="#" onclick="navigate('notas')" data-i18n="nav_notes">Notas Oficiais</a></li>
-                <li><a href="#" onclick="navigate('restrito')" style="color: var(--scj-dark-blue);">🔒 Área Restrita</a></li>
-            </ul>
-        </div>
-    </nav>
+    <section class="container" style="margin-top: 10px; margin-bottom: 10px; min-height: auto;">
+        <details class="card" style="padding: 15px; border-left: 5px solid var(--color-scj-blue); border-top: none;">
+            <summary style="cursor: pointer; font-weight: bold; color: var(--color-scj-blue); display: flex; align-items: center; gap: 10px;">
+                <span class="material-symbols-outlined">accessibility_new</span> <span data-i18n="access_guide">Guia de Acessibilidade & Ajuda</span>
+            </summary>
+            <div style="margin-top: 15px; color: var(--color-text-muted);">
+                <p data-i18n="access_text">Este portal segue as diretrizes WCAG 2.1. Utilize os botões no topo para ajustar o contraste e tamanho da fonte. Compatível com leitores de tela NVDA e JAWS. Todas as imagens possuem texto alternativo.</p>
+                <br>
+                <ul>
+                    <li><strong>Tab:</strong> Navegar entre links.</li>
+                    <li><strong>Enter:</strong> Selecionar opção.</li>
+                </ul>
+            </div>
+        </details>
+    </section>
 
-    <div id="acessibilidade-panel" class="access-panel">
-        <div class="container access-controls">
-            <button class="access-btn" onclick="changeFontSize(1)">A+</button>
-            <button class="access-btn" onclick="changeFontSize(-1)">A-</button>
-            <button class="access-btn" onclick="toggleContrast()">Alto Contraste</button>
-            <button class="access-btn" onclick="toggleAccessibility()">Fechar X</button>
-        </div>
-    </div>
+    <div id="toast-container"></div>
 
     <main class="container">
-
-        <section id="home" class="page-section active">
-            <div class="hero">
-                <h2 data-i18n="hero_title">Justiça Transparente para Todos</h2>
-                <p data-i18n="hero_subtitle">O canal oficial do cidadão de Brookasil para garantir a integridade da nossa democracia.</p>
+        
+        <section id="view-home" class="view-section active">
+            <div class="hero-banner">
+                <h2 style="font-family: var(--font-display); font-size: 2.5rem; margin-bottom: 15px;" data-i18n="hero_title">Justiça, Transparência e Constituição</h2>
+                <p style="font-size: 1.1rem; max-width: 700px; margin: 0 auto;" data-i18n="hero_subtitle">Bem-vindo ao Portal Oficial do Supremo Conselho Judicial da República de Brookasil. Exerça sua cidadania.</p>
                 <div style="margin-top: 30px;">
-                    <button class="btn btn-primary" onclick="navigate('denunciar')" data-i18n="btn_denounce">Fazer Denúncia</button>
-                    <button class="btn btn-secondary" onclick="navigate('consulta')" data-i18n="btn_consult">Consultar Processos</button>
+                    <button class="btn btn-accent" onclick="Router.go('denuncia')" data-i18n="btn_denounce_now">REGISTRAR DENÚNCIA</button>
+                    <button class="btn btn-outline" style="color: white; border-color: white;" onclick="Router.go('consulta')" data-i18n="btn_consult_now">CONSULTAR PROCESSOS</button>
                 </div>
             </div>
 
-            <div class="card">
-                <h3 style="margin-bottom: 15px; color: var(--scj-dark-blue);">ℹ️ Como Funciona</h3>
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; text-align: center;">
-                    <div>
-                        <i class="ph ph-pencil-simple-line" style="font-size: 2rem; color: var(--scj-green);"></i>
-                        <h4>1. Relate</h4>
-                        <p>Preencha o formulário oficial com provas.</p>
-                    </div>
-                    <div>
-                        <i class="ph ph-gavel" style="font-size: 2rem; color: var(--scj-yellow);"></i>
-                        <h4>2. Julgamento</h4>
-                        <p>O SCJ analisa com base na Constituição.</p>
-                    </div>
-                    <div>
-                        <i class="ph ph-newspaper" style="font-size: 2rem; color: var(--scj-blue);"></i>
-                        <h4>3. Publicação</h4>
-                        <p>Decisões e notas são publicadas aqui.</p>
-                    </div>
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+                <span class="material-symbols-outlined" style="color: var(--color-scj-blue); font-size: 2rem;">campaign</span>
+                <h3 style="font-family: var(--font-display); color: var(--color-scj-dark);" data-i18n="section_notes">Notas Oficiais da Presidência</h3>
+            </div>
+            
+            <div id="notes-feed">
+                <div style="text-align: center; padding: 40px; color: #999;">
+                    <span class="material-symbols-outlined" style="font-size: 3rem;">hourglass_empty</span>
+                    <p>Carregando comunicados oficiais...</p>
                 </div>
             </div>
         </section>
 
-        <section id="denunciar" class="page-section">
-            <h2 style="border-bottom: 2px solid var(--scj-green); padding-bottom: 10px; margin-bottom: 20px;" data-i18n="form_title">Nova Denúncia</h2>
-            
-            <div class="card">
-                <form id="formDenuncia" onsubmit="submitDenuncia(event)">
-                    <div class="grid-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                        <div class="form-group">
-                            <label>Seu Nome (Denunciante)*</label>
-                            <input type="text" id="den_nome" class="form-control" required placeholder="Nome completo">
-                        </div>
-                        <div class="form-group">
-                            <label>Seu Cargo/Ocupação</label>
-                            <input type="text" id="den_cargo" class="form-control" placeholder="Ex: Cidadão, Servidor...">
-                        </div>
+        <section id="view-denuncia" class="view-section">
+            <div class="card" style="border-top-color: var(--color-error);">
+                <h2 style="font-family: var(--font-display); color: var(--color-error); margin-bottom: 10px;" data-i18n="denounce_header">Protocolo de Denúncia Formal</h2>
+                <p style="color: var(--color-text-muted); margin-bottom: 20px;" data-i18n="denounce_intro">Preencha os dados abaixo com precisão. Falsas comunicações de crime são passíveis de punição conforme Art. 340 do Código Penal de Brookasil.</p>
+                
+                <form id="form-denuncia">
+                    <div class="form-group">
+                        <label class="form-label" data-i18n="lbl_denunciante">Seu Nome e Cargo (Identificação Obrigatória)</label>
+                        <input type="text" id="d-nome" class="form-control" required placeholder="Ex: João Silva - Advogado Civil">
                     </div>
 
-                    <div class="grid-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                         <div class="form-group">
-                            <label>Denunciado (Nome)*</label>
-                            <input type="text" id="reu_nome" class="form-control" required>
+                            <label class="form-label" data-i18n="lbl_acusado">Denunciado (Nome, Cargo, Partido)</label>
+                            <input type="text" id="d-acusado" class="form-control" required placeholder="Ex: Ministro X - Partido Y">
                         </div>
                         <div class="form-group">
-                            <label>Instituição/Partido do Denunciado</label>
-                            <input type="text" id="reu_inst" class="form-control">
+                            <label class="form-label" data-i18n="lbl_data">Data do Ocorrido</label>
+                            <input type="date" id="d-data" class="form-control" required>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>Tema da Denúncia*</label>
-                        <select id="den_tema" class="form-control" required>
-                            <option value="">Selecione...</option>
+                        <label class="form-label" data-i18n="lbl_tema">Natureza da Infração</label>
+                        <select id="d-tema" class="form-control" required>
+                            <option value="" disabled selected>Selecione uma categoria...</option>
                             <option value="Abuso de Poder">Abuso de Poder</option>
-                            <option value="Corrupção">Corrupção</option>
                             <option value="Descumprimento de Leis">Descumprimento de Leis</option>
-                            <option value="Fake News">Fake News</option>
+                            <option value="Corrupção">Corrupção Ativa/Passiva</option>
+                            <option value="Fake News">Disseminação de Fake News</option>
                             <option value="Ofensas">Ofensas à Honra</option>
-                            <option value="Outros">Outros</option>
+                            <option value="Outros">Outros Crimes Constitucionais</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label>Descrição Detalhada e Artigos Violados*</label>
-                        <textarea id="den_desc" class="form-control" required placeholder="Descreva o ocorrido com detalhes..."></textarea>
+                        <label class="form-label" data-i18n="lbl_artigos">Artigos Violados (Constituição)</label>
+                        <input type="text" id="d-artigos" class="form-control" placeholder="Ex: Artigo 5º, Inciso X...">
                     </div>
 
                     <div class="form-group">
-    <label>Provas (Upload de Imagem ou Vídeo)*</label>
-    <input type="file" id="den_arquivo" class="form-control" accept="image/*,video/*" required>
-    <small style="color: #666;">Selecione um arquivo de imagem ou vídeo diretamente do seu dispositivo.</small>
-    
-    <div id="upload_progress_container" style="width: 100%; background: #eee; height: 8px; margin-top: 10px; border-radius: 4px; display: none;">
-        <div id="upload_bar" style="width: 0%; height: 100%; background: var(--scj-green); border-radius: 4px; transition: width 0.3s;"></div>
-    </div>
-</div>
+                        <label class="form-label" data-i18n="lbl_desc">Relato Detalhado dos Fatos</label>
+                        <textarea id="d-desc" class="form-control" required></textarea>
+                    </div>
 
-                    <div class="term-box">
-                        <label style="display: flex; align-items: start; gap: 10px; cursor: pointer;">
-                            <input type="checkbox" id="den_termo" required style="margin-top: 5px;">
-                            <span>
-                                <strong>TERMO DE RESPONSABILIDADE:</strong> Declaro que as informações acima são verdadeiras sob as penas da lei de Brookasil. Estou ciente que denúncias falsas (falso testemunho) acarretarão em processo reverso e banimento.
-                            </span>
+                    <div class="form-group">
+                        <label class="form-label" data-i18n="lbl_prova">Provas Materiais (Imagem/Vídeo - Máx 2MB)</label>
+                        <div class="file-drop-area" onclick="document.getElementById('d-file').click()">
+                            <span class="material-symbols-outlined" style="font-size: 40px; color: var(--color-scj-blue);">cloud_upload</span>
+                            <p id="file-feedback">Clique para selecionar arquivo da galeria (Local)</p>
+                            <input type="file" id="d-file" style="display: none;" accept="image/*,video/mp4" onchange="App.handleFile(this)">
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="background: #fff8e1; padding: 15px; border-radius: 4px; border: 1px solid #ffe0b2;">
+                        <label style="display: flex; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" id="d-check" required style="width: 20px; height: 20px;">
+                            <span style="font-size: 0.85rem;" data-i18n="term_accept"><strong>TERMO DE RESPONSABILIDADE:</strong> Declaro sob as penas da lei que as informações aqui prestadas são verdadeiras e estou ciente de que denúncias caluniosas resultarão em processo judicial contra minha pessoa.</span>
                         </label>
                     </div>
 
-                    <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
-                        <i class="ph ph-paper-plane-right"></i> Protocolar Denúncia
-                    </button>
+                    <div style="text-align: right;">
+                        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 15px;">
+                            <span class="material-symbols-outlined">send</span> <span data-i18n="btn_submit_denounce">ENVIAR DENÚNCIA AO TRIBUNAL</span>
+                        </button>
+                    </div>
                 </form>
             </div>
         </section>
 
-        <section id="consulta" class="page-section">
-            <h2 style="margin-bottom: 20px;" data-i18n="nav_consult">Consulta Pública de Processos</h2>
+        <section id="view-consulta" class="view-section">
+            <h2 style="font-family: var(--font-display); color: var(--color-scj-dark); margin-bottom: 20px;" data-i18n="consult_title">Consulta Pública Processual</h2>
             
-            <div class="card" style="background: var(--bg-light); border: 1px solid #ddd; padding: 15px;">
-                <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: end;">
-                    <div style="flex: 1;">
-                        <label style="font-size: 0.8rem;">Filtrar por Status</label>
-                        <select id="filtro_status" class="form-control" onchange="renderDenunciasPublicas()">
-                            <option value="todos">Todos</option>
-                            <option value="Recebida">Recebida</option>
-                            <option value="Em Análise">Em Análise</option>
-                            <option value="Julgada">Julgada</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-outline" onclick="renderDenunciasPublicas()"><i class="ph ph-arrows-clockwise"></i> Atualizar</button>
+            <div class="card" style="background: var(--color-scj-blue); color: white; border:none;">
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <input type="text" id="search-input" class="form-control" placeholder="Buscar por Nome, ID ou Tema..." style="flex: 2; border: none;">
+                    <select id="filter-status" class="form-control" style="flex: 1; border: none;">
+                        <option value="all">Todos os Status</option>
+                        <option value="Recebida">Recebida</option>
+                        <option value="Em análise">Em análise</option>
+                        <option value="Julgada">Julgada</option>
+                        <option value="Arquivada">Arquivada</option>
+                    </select>
+                    <button class="btn btn-accent" onclick="PublicController.filter()" style="color: black;"><span class="material-symbols-outlined">filter_list</span> FILTRAR</button>
                 </div>
             </div>
 
-            <div id="lista-denuncias-publica" class="data-grid">
-                <p style="grid-column: 1/-1; text-align: center; color: #666;">Carregando dados do sistema...</p>
-            </div>
-        </section>
-
-        <section id="notas" class="page-section">
-            <div style="text-align: center; margin-bottom: 40px;">
-                <i class="ph ph-seal-check" style="font-size: 3rem; color: var(--scj-green);"></i>
-                <h2>Diário Oficial do SCJ</h2>
-                <p>Comunicados e Decisões da Presidência</p>
-            </div>
-            
-            <div id="lista-notas">
+            <div id="public-results-container">
                 </div>
         </section>
 
-        <section id="restrito" class="page-section">
-            
-            <div id="admin-login" class="admin-login-wrapper card">
-                <h3 style="text-align: center; color: var(--scj-dark-blue); margin-bottom: 20px;">Acesso Magistrados</h3>
-                <form onsubmit="loginAdmin(event)">
-                    <div class="form-group">
-                        <label>Senha de Acesso</label>
-                        <input type="password" id="admin_pass" class="form-control" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%;">Entrar no Sistema</button>
-                </form>
+        <section id="view-admin" class="view-section">
+            <div id="admin-login-overlay" class="modal-overlay">
+                <div class="modal-box">
+                    <span class="material-symbols-outlined" style="font-size: 3rem; color: var(--color-scj-dark);">security</span>
+                    <h3>Acesso Restrito SCJ</h3>
+                    <p style="margin-bottom: 20px; font-size: 0.9rem;">Magistrados e Servidores Autorizados</p>
+                    <input type="password" id="admin-pass-input" class="form-control" placeholder="Senha de Acesso" style="text-align: center; margin-bottom: 15px;">
+                    <button class="btn btn-primary" onclick="AdminController.login()" style="width: 100%;">ENTRAR NO SISTEMA</button>
+                    <button class="btn btn-outline" onclick="Router.go('home')" style="width: 100%; margin-top: 10px; border:none;">Voltar</button>
+                </div>
             </div>
 
-            <div id="admin-dashboard" class="admin-dashboard">
+            <div id="admin-panel" style="display: none;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                    <h2>Painel de Controle SCJ</h2>
-                    <button class="btn btn-outline" onclick="logoutAdmin()">Sair</button>
+                    <h2 style="color: var(--color-scj-dark);">Painel Administrativo - SCJ 2026</h2>
+                    <button class="btn btn-danger" onclick="AdminController.logout()">SAIR</button>
                 </div>
 
-                <div style="margin-bottom: 20px;">
-                    <button class="btn btn-secondary" onclick="showAdminTab('processos')">Gerir Processos</button>
-                    <button class="btn btn-primary" onclick="showAdminTab('nova-nota')">Publicar Nota Oficial</button>
-                </div>
+                <div class="admin-dashboard">
+                    <aside class="admin-sidebar">
+                        <button class="menu-btn active-tab" onclick="AdminController.switchTab('denuncias')">
+                            <span class="material-symbols-outlined" style="vertical-align: middle;">inbox</span> Gerenciar Denúncias
+                        </button>
+                        <button class="menu-btn" onclick="AdminController.switchTab('notas')">
+                            <span class="material-symbols-outlined" style="vertical-align: middle;">edit_note</span> Publicar Nota Oficial
+                        </button>
+                    </aside>
 
-                <div id="admin-tab-processos">
-                    <div class="card" style="overflow-x: auto;">
-                        <table id="tabela-admin">
-                            <thead>
-                                <tr>
-                                    <th>Data</th>
-                                    <th>Denunciante</th>
-                                    <th>Acusado</th>
-                                    <th>Tema</th>
-                                    <th>Status</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                </tbody>
-                        </table>
+                    <div class="admin-content">
+                        <div id="adm-tab-denuncias">
+                            <div class="card">
+                                <h3>Processos Pendentes</h3>
+                                <div id="admin-denuncia-list" style="margin-top: 15px;"></div>
+                            </div>
+                        </div>
+
+                        <div id="adm-tab-notas" style="display: none;">
+                            <div class="card">
+                                <h3>Nova Nota Oficial</h3>
+                                <form onsubmit="AdminController.postNote(event)">
+                                    <div class="form-group">
+                                        <label class="form-label">Título da Nota</label>
+                                        <input type="text" id="note-title" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Autoridade</label>
+                                        <select id="note-author" class="form-control" required>
+                                            <option value="Presidente do SCJ">Presidente do SCJ</option>
+                                            <option value="Vice-Presidente do SCJ">Vice-Presidente do SCJ</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Texto do Comunicado</label>
+                                        <textarea id="note-body" class="form-control" rows="8" required></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">PUBLICAR IMEDIATAMENTE</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <div id="admin-tab-nova-nota" style="display: none;">
-                    <div class="card">
-                        <h3>Publicar Nota Oficial</h3>
-                        <form onsubmit="submitNota(event)">
-                            <div class="form-group">
-                                <label>Título da Nota</label>
-                                <input type="text" id="nota_titulo" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Autoridade (Assinatura)</label>
-                                <select id="nota_autor" class="form-control" required>
-                                    <option value="Presidente do SCJ">Presidente do SCJ</option>
-                                    <option value="Vice-Presidente do SCJ">Vice-Presidente do SCJ</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Conteúdo da Nota</label>
-                                <textarea id="nota_texto" class="form-control" style="height: 200px;" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Publicar Nota</button>
-                        </form>
-                    </div>
-                </div>
-
             </div>
         </section>
 
     </main>
 
-    <div id="modal-decisao" style="display:none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
-        <div class="card" style="width: 90%; max-width: 500px;">
-            <h3>Julgar Processo</h3>
-            <input type="hidden" id="edit_id">
-            <div class="form-group">
-                <label>Novo Status</label>
-                <select id="edit_status" class="form-control">
-                    <option value="Em Análise">Em Análise</option>
-                    <option value="Julgada">Julgada</option>
-                    <option value="Arquivada">Arquivada</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Decisão / Sentença Final</label>
-                <textarea id="edit_decisao" class="form-control" placeholder="Escreva o veredito..."></textarea>
-            </div>
-            <div style="text-align: right;">
-                <button class="btn btn-outline" onclick="closeModal()">Cancelar</button>
-                <button class="btn btn-primary" onclick="saveDecisao()">Salvar Decisão</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="toast" class="toast">Mensagem aqui</div>
-
     <footer>
-        <div class="container footer-content">
-            <div class="footer-col">
-                <h4>SCJ Brookasil</h4>
-                <p>Supremo Conselho Judicial</p>
-                <p>Praça dos Três Poderes, Gabinete 01</p>
-            </div>
-            <div class="footer-col">
-                <h4>Links Úteis</h4>
-                <ul style="list-style: none;">
-                    <li><a href="#" style="color: #ccc; text-decoration: none;">Constituição</a></li>
-                    <li><a href="#" style="color: #ccc; text-decoration: none;">Código Penal</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="copyright">
-            &copy; 2024-2025 Supremo Conselho Judicial da República de Brookasil. Todos os direitos reservados.
+        <div class="container">
+            <img src="1000255548.jpg" alt="Logo SCJ" class="footer-logo">
+            <h3 style="font-family: var(--font-display); margin-bottom: 10px;">SUPREMO CONSELHO JUDICIAL</h3>
+            <p style="font-size: 0.9rem; color: #aaa;">República de Brookasil</p>
+            <div style="margin: 20px 0; width: 50px; height: 2px; background: var(--color-scj-yellow); display: inline-block;"></div>
+            <p style="font-size: 0.8rem; color: #777;">&copy; 2026 SCJ. Todos os direitos reservados. Sistema Desenvolvido com Tecnologia de Ponta.</p>
         </div>
     </footer>
 
     <script type="module">
-        // Importando Firebase SDK (Modular)
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, push, onValue, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-// NOVA IMPORTAÇÃO OBRIGATÓRIA PARA UPLOAD
-import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+        /**
+         * SCJ OFFICIAL SYSTEM ENGINE
+         * Version: 2.0.26 (New Year Build)
+         * Developer: AI Senior Architect
+         */
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-const storage = getStorage(app); // Inicialização do Storage
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+        import { getDatabase, ref, push, set, onValue, update } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
 
-        // Estado Global da Aplicação
-        window.appState = {
-            isAdmin: false,
-            lang: 'pt',
-            currentData: {}
+        // --- CONFIGURAÇÃO FIREBASE (CRÍTICA) ---
+        const firebaseConfig = {
+            databaseURL: "https://SCJ-brookasil-default-rtdb.firebaseio.com",
+            apiKey: "AIzaSyBCJEWox7oMJx-Ct1LMzEbNZwZimBlZ8AA" // Nota: Em prod, usar regras de segurança no backend
         };
 
-        // Textos para Tradução
-        const i18n = {
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // --- ESTADO GLOBAL ---
+        const State = {
+            denuncias: [],
+            notas: [],
+            tempFileBase64: null,
+            lang: 'pt',
+            isAdmin: false
+        };
+
+        // --- DICIONÁRIO I18N ---
+        const Dictionary = {
             pt: {
-                nav_home: "Início",
-                nav_denounce: "Realizar Denúncia",
-                nav_consult: "Consulta Pública",
-                nav_notes: "Notas Oficiais",
-                hero_title: "Justiça Transparente para Todos",
-                form_title: "Nova Denúncia"
+                menu_home: "INÍCIO", menu_denounce: "DENUNCIAR", menu_consult: "CONSULTA PÚBLICA", menu_admin: "ÁREA RESTRITA",
+                hero_title: "Justiça, Transparência e Constituição",
+                btn_denounce_now: "REGISTRAR DENÚNCIA", btn_consult_now: "CONSULTAR PROCESSOS",
+                lbl_denunciante: "Seu Nome e Cargo (Identificação Obrigatória)",
+                term_accept: "TERMO DE RESPONSABILIDADE: Declaro sob as penas da lei...",
+                access_guide: "Guia de Acessibilidade & Ajuda"
             },
             en: {
-                nav_home: "Home",
-                nav_denounce: "File Complaint",
-                nav_consult: "Public Inquiry",
-                nav_notes: "Official Notes",
-                hero_title: "Transparent Justice for All",
-                form_title: "New Complaint"
+                menu_home: "HOME", menu_denounce: "REPORT", menu_consult: "PUBLIC SEARCH", menu_admin: "RESTRICTED AREA",
+                hero_title: "Justice, Transparency and Constitution",
+                btn_denounce_now: "FILE A COMPLAINT", btn_consult_now: "SEARCH CASES",
+                lbl_denunciante: "Your Name and Role (Mandatory ID)",
+                term_accept: "LIABILITY TERM: I declare under penalty of law...",
+                access_guide: "Accessibility Guide & Help"
             }
         };
 
-        // ==========================================
-        // 🧭 NAVEGAÇÃO E UI
-        // ==========================================
-        
-        // Expor funções para o escopo global (HTML onclick)
-        window.navigate = function(sectionId) {
-            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
-            document.getElementById(sectionId).classList.add('active');
-            
-            // Atualizar navegação
-            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-            // Lógica simples para destacar menu (pode ser melhorada)
-            
-            if(sectionId === 'consulta') renderDenunciasPublicas();
-            if(sectionId === 'notas') renderNotasOficiais();
-        }
-
-        window.toggleLang = function() {
-            window.appState.lang = window.appState.lang === 'pt' ? 'en' : 'pt';
-            updateTexts();
-        }
-
-        function updateTexts() {
-            const l = window.appState.lang;
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if(i18n[l][key]) el.innerText = i18n[l][key];
-            });
-        }
-
-        // Acessibilidade
-        window.toggleAccessibility = function() {
-            const p = document.getElementById('acessibilidade-panel');
-            p.style.display = p.style.display === 'flex' ? 'none' : 'flex';
-        }
-
-        window.changeFontSize = function(delta) {
-            const body = document.body;
-            const currentSize = parseFloat(window.getComputedStyle(body, null).getPropertyValue('font-size'));
-            body.style.fontSize = (currentSize + delta) + 'px';
-        }
-
-        window.toggleContrast = function() {
-            document.body.classList.toggle('high-contrast');
-        }
-
-        window.showToast = function(msg, type = 'success') {
-            const t = document.getElementById('toast');
-            t.innerText = msg;
-            t.className = `toast show ${type}`;
-            setTimeout(() => t.className = 'toast', 3000);
-        }
-
-        // ==========================================
-        // 🔥 LÓGICA DE DADOS (FIREBASE)
-        // ==========================================
-
-        // 1. Enviar Denúncia
-     window.submitDenuncia = function(e) {
-    e.preventDefault();
-    
-    const fileInput = document.getElementById('den_arquivo');
-    const file = fileInput.files[0];
-    const submitBtn = e.target.querySelector('button[type="submit"]');
-    const progressBar = document.getElementById('upload_bar');
-    const progressContainer = document.getElementById('upload_progress_container');
-
-    if (!file) {
-        window.showToast("Por favor, selecione um arquivo.", "error");
-        return;
-    }
-
-    // Desativa botão e mostra progresso
-    submitBtn.disabled = true;
-    progressContainer.style.display = 'block';
-
-    // 1. Define o caminho único no Storage
-    const storagePath = `provas/${Date.now()}_${file.name}`;
-    const storageReference = sRef(storage, storagePath);
-
-    // 2. Executa o upload real do arquivo
-    const uploadTask = uploadBytesResumable(storageReference, file);
-
-    uploadTask.on('state_changed', 
-        (snapshot) => {
-            // Atualiza a barra de progresso visual
-            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            progressBar.style.width = progress + '%';
-        }, 
-        (error) => {
-            window.showToast("Erro no upload: " + error.message, "error");
-            submitBtn.disabled = false;
-        }, 
-        () => {
-            // 3. Após sucesso no Storage, salva as informações no Database
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                const denuncia = {
-                    denunciante: document.getElementById('den_nome').value,
-                    cargo_denunciante: document.getElementById('den_cargo').value,
-                    acusado: document.getElementById('reu_nome').value,
-                    instituicao_acusado: document.getElementById('reu_inst').value,
-                    tema: document.getElementById('den_tema').value,
-                    descricao: document.getElementById('den_desc').value,
-                    data: new Date().toLocaleString(),
-                    status: 'Recebida',
-                    // Requisitos: Nome, Tipo e Caminho no Storage
-                    arquivo_nome: file.name,
-                    arquivo_tipo: file.type.startsWith('video') ? 'vídeo' : 'imagem',
-                    arquivo_storage_path: storagePath,
-                    arquivo_url: downloadURL // Link gerado para visualização
-                };
-
-                const denunciasRef = ref(db, 'denuncias');
-                push(denunciasRef, denuncia).then(() => {
-                    window.showToast("Denúncia e arquivo enviados com sucesso!", "success");
-                    document.getElementById('formDenuncia').reset();
-                    progressContainer.style.display = 'none';
-                    submitBtn.disabled = false;
-                    window.navigate('home');
+        // --- SERVIÇO DE UTILITÁRIOS ---
+        const Utils = {
+            toast: (msg, type = 'info') => {
+                const container = document.getElementById('toast-container');
+                const div = document.createElement('div');
+                div.className = 'toast';
+                const icon = type === 'error' ? 'error' : (type === 'success' ? 'check_circle' : 'info');
+                div.innerHTML = `<span class="material-symbols-outlined" style="color: ${type==='error'?'var(--color-error)':'var(--color-scj-green)'}">${icon}</span> <span>${msg}</span>`;
+                container.appendChild(div);
+                setTimeout(() => div.remove(), 4000);
+            },
+            formatDate: (timestamp) => {
+                return new Date(timestamp).toLocaleDateString(State.lang === 'pt' ? 'pt-BR' : 'en-US', {
+                    day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute:'2-digit'
                 });
-            });
-        }
-    );
-}
-                .catch((err) => {
-                    window.showToast("Erro ao enviar: " + err.message, "error");
-                });
-        }
-
-        // 2. Ler Dados (Listener em tempo real)
-        const denunciasRef = ref(db, 'denuncias');
-        onValue(denunciasRef, (snapshot) => {
-            const data = snapshot.val();
-            window.appState.denuncias = data || {};
-            // Se estiver na tela de consulta ou admin, atualiza
-            if(document.getElementById('consulta').classList.contains('active')) renderDenunciasPublicas();
-            if(window.appState.isAdmin) renderAdminTable();
-        });
-
-        const notasRef = ref(db, 'notas_oficiais');
-        onValue(notasRef, (snapshot) => {
-            window.appState.notas = snapshot.val() || {};
-            renderNotasOficiais();
-        });
-
-        // 3. Renderização Pública
-        window.renderDenunciasPublicas = function() {
-            const container = document.getElementById('lista-denuncias-publica');
-            const filtro = document.getElementById('filtro_status').value;
-            container.innerHTML = '';
-
-            const lista = window.appState.denuncias;
-            
-            if(!lista) {
-                container.innerHTML = '<p>Nenhuma denúncia encontrada.</p>';
-                return;
+            },
+            sanitize: (str) => {
+                const div = document.createElement('div');
+                div.innerText = str;
+                return div.innerHTML;
             }
+        };
 
-            Object.keys(lista).reverse().forEach(key => {
-                const item = lista[key];
+        // --- SERVIÇO DE ACESSIBILIDADE ---
+        window.AccessSystem = {
+            fontSize: 100,
+            toggleContrast: () => document.body.classList.toggle('high-contrast'),
+            changeFont: (dir) => {
+                AccessSystem.fontSize += (dir * 10);
+                if(AccessSystem.fontSize < 80) AccessSystem.fontSize = 80;
+                if(AccessSystem.fontSize > 130) AccessSystem.fontSize = 130;
+                document.documentElement.style.fontSize = `${AccessSystem.fontSize}%`;
+            },
+            readingMode: () => {
+                document.body.style.maxWidth = "800px";
+                document.body.style.margin = "0 auto";
+                document.body.style.backgroundImage = "none";
+                document.body.style.backgroundColor = "#fff";
+                Utils.toast("Modo Leitura Ativado", "info");
+            }
+        };
+
+        // --- ROTEAMENTO ---
+        window.Router = {
+            go: (viewId) => {
+                document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+                document.getElementById(`view-${viewId}`).classList.add('active');
                 
-                // Filtro
-                if(filtro !== 'todos' && item.status !== filtro) return;
+                // Atualiza Menu
+                document.querySelectorAll('nav a').forEach(el => el.classList.remove('active'));
+                const activeLink = document.querySelector(`a[onclick="Router.go('${viewId}')"]`);
+                if(activeLink) activeLink.classList.add('active');
 
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.style.borderTopColor = getStatusColor(item.status);
+                // Lógica Específica
+                if(viewId === 'admin' && !State.isAdmin) {
+                    document.getElementById('admin-login-overlay').style.display = 'flex';
+                }
+                if(viewId === 'consulta') PublicController.render();
+                window.scrollTo(0,0);
+            }
+        };
+
+        // --- CONTROLADOR PRINCIPAL DA APP ---
+        window.App = {
+            init: () => {
+                App.listenData();
                 
-                let html = `
-                    <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-                        <span class="status-badge ${getStatusClass(item.status)}">${item.status}</span>
-                        <small>${item.data}</small>
-                    </div>
-                    <h4>Processo contra: ${item.acusado}</h4>
-                    <p style="font-size:0.9rem; color:#666;">Tema: ${item.tema}</p>
-                    <hr style="margin: 10px 0; border:0; border-top:1px solid #eee;">
-                    <p><strong>Descrição:</strong> ${item.descricao.substring(0, 100)}...</p>
-                `;
+                // I18n Listener
+                document.getElementById('lang-select').addEventListener('change', (e) => {
+                    State.lang = e.target.value;
+                    App.translate();
+                });
 
-                if(item.status === 'Julgada' && item.decisao_final) {
-                    html += `
-                        <div style="background:#f9f9f9; padding:10px; margin-top:10px; border-left:3px solid var(--scj-green);">
-                            <strong>⚖️ Veredito SCJ:</strong><br>
-                            ${item.decisao_final}
-                        </div>
-                    `;
+                // Form Submit
+                document.getElementById('form-denuncia').addEventListener('submit', App.submitDenuncia);
+            },
+
+            listenData: () => {
+                // Ouvir Denúncias
+                onValue(ref(db, 'denuncias'), (snapshot) => {
+                    State.denuncias = [];
+                    snapshot.forEach(child => {
+                        State.denuncias.push({ id: child.key, ...child.val() });
+                    });
+                    PublicController.render();
+                    if(State.isAdmin) AdminController.renderList();
+                });
+
+                // Ouvir Notas
+                onValue(ref(db, 'notas_oficiais'), (snapshot) => {
+                    State.notas = [];
+                    snapshot.forEach(child => {
+                        State.notas.unshift(child.val()); // Mais recente primeiro
+                    });
+                    App.renderNotes();
+                });
+            },
+
+            handleFile: (input) => {
+                const file = input.files[0];
+                if (!file) return;
+                
+                // Limite 2MB (Firebase Realtime tem limites)
+                if(file.size > 2 * 1024 * 1024) {
+                    Utils.toast("Arquivo muito grande. Máximo 2MB.", "error");
+                    input.value = "";
+                    return;
                 }
 
-                card.innerHTML = html;
-                container.appendChild(card);
-            });
-        }
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    State.tempFileBase64 = e.target.result;
+                    document.getElementById('file-feedback').innerText = `✅ Arquivo Carregado: ${file.name}`;
+                    document.getElementById('file-feedback').style.color = "var(--color-scj-green)";
+                    document.getElementById('file-feedback').style.fontWeight = "bold";
+                };
+                reader.readAsDataURL(file);
+            },
 
-        window.renderNotasOficiais = function() {
-            const container = document.getElementById('lista-notas');
-            container.innerHTML = '';
-            const lista = window.appState.notas;
+            submitDenuncia: async (e) => {
+                e.preventDefault();
+                
+                const data = {
+                    denunciante: document.getElementById('d-nome').value,
+                    acusado: document.getElementById('d-acusado').value,
+                    data_ocorrido: document.getElementById('d-data').value,
+                    tema: document.getElementById('d-tema').value,
+                    artigos: document.getElementById('d-artigos').value,
+                    descricao: document.getElementById('d-desc').value,
+                    prova: State.tempFileBase64 || "Sem anexo",
+                    status: "Recebida",
+                    timestamp: Date.now(),
+                    decisao_final: ""
+                };
 
-            if(!lista) return;
+                try {
+                    await push(ref(db, 'denuncias'), data);
+                    Utils.toast("Denúncia Protocolada com Sucesso!", "success");
+                    e.target.reset();
+                    State.tempFileBase64 = null;
+                    document.getElementById('file-feedback').innerText = "Clique para selecionar arquivo";
+                    document.getElementById('file-feedback').style.color = "initial";
+                    setTimeout(() => Router.go('consulta'), 1000);
+                } catch (err) {
+                    console.error(err);
+                    Utils.toast("Erro ao enviar. Verifique sua conexão.", "error");
+                }
+            },
 
-            Object.keys(lista).reverse().forEach(key => {
-                const nota = lista[key];
-                const div = document.createElement('div');
-                div.className = 'nota-oficial';
-                div.innerHTML = `
-                    <div class="nota-header">
-                        <h3 style="font-family: var(--font-serif); font-size: 1.5rem;">${nota.titulo}</h3>
-                        <div class="nota-meta">Publicado em: ${nota.data}</div>
+            renderNotes: () => {
+                const container = document.getElementById('notes-feed');
+                if(State.notas.length === 0) {
+                    container.innerHTML = '<p class="text-center">Nenhuma nota oficial publicada.</p>';
+                    return;
+                }
+                container.innerHTML = State.notas.map(n => `
+                    <div class="card" style="border-left: 5px solid var(--color-scj-yellow);">
+                        <small style="text-transform:uppercase; color:#999; font-weight:bold;">${Utils.formatDate(n.timestamp)} • ${n.autor}</small>
+                        <h3 style="color: var(--color-scj-blue); margin: 5px 0 10px;">${n.titulo}</h3>
+                        <p style="white-space: pre-wrap;">${n.texto}</p>
+                        <div style="margin-top:15px; text-align:right;">
+                            <img src="1000255548.jpg" style="height:30px; opacity:0.5; vertical-align:middle;">
+                        </div>
                     </div>
-                    <div class="nota-body">
-                        ${nota.texto.replace(/\n/g, '<br>')}
-                    </div>
-                    <div class="nota-footer">
-                        ${nota.autor}<br>
-                        SUPREMO CONSELHO JUDICIAL
-                    </div>
-                `;
-                container.appendChild(div);
-            });
-        }
+                `).join('');
+            },
 
-        // Helpers de Estilo
-        function getStatusColor(status) {
-            if(status === 'Julgada') return 'var(--scj-green)';
-            if(status === 'Arquivada') return '#dc3545';
-            if(status === 'Em Análise') return 'var(--scj-yellow)';
-            return '#ccc';
-        }
-
-        function getStatusClass(status) {
-            if(status === 'Julgada') return 'status-julgada';
-            if(status === 'Arquivada') return 'status-arquivada';
-            if(status === 'Em Análise') return 'status-analise';
-            return 'status-recebida';
-        }
-
-        // ==========================================
-        // 🔐 ÁREA ADMIN
-        // ==========================================
-
-        window.loginAdmin = function(e) {
-            e.preventDefault();
-            const pass = document.getElementById('admin_pass').value;
-            if(pass === 'SCJ_ordem2026') {
-                window.appState.isAdmin = true;
-                document.getElementById('admin-login').style.display = 'none';
-                document.getElementById('admin-dashboard').style.display = 'block';
-                renderAdminTable();
-                window.showToast("Login efetuado com autoridade SCJ.", "success");
-            } else {
-                window.showToast("Acesso Negado. Senha incorreta.", "error");
+            translate: () => {
+                // Implementação simples de troca de texto
+                const dict = Dictionary[State.lang];
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if(dict[key]) el.innerText = dict[key];
+                });
             }
-        }
+        };
 
-        window.logoutAdmin = function() {
-            window.appState.isAdmin = false;
-            document.getElementById('admin_pass').value = '';
-            document.getElementById('admin-login').style.display = 'block';
-            document.getElementById('admin-dashboard').style.display = 'none';
-        }
+        // --- PUBLIC CONTROLLER ---
+        window.PublicController = {
+            render: () => {
+                // Chama o filtro para renderizar com base nos inputs atuais
+                PublicController.filter();
+            },
+            filter: () => {
+                const search = document.getElementById('search-input').value.toLowerCase();
+                const status = document.getElementById('filter-status').value;
+                const container = document.getElementById('public-results-container');
 
-        window.showAdminTab = function(tabName) {
-            document.getElementById('admin-tab-processos').style.display = tabName === 'processos' ? 'block' : 'none';
-            document.getElementById('admin-tab-nova-nota').style.display = tabName === 'nova-nota' ? 'block' : 'none';
-        }
+                const filtered = State.denuncias.filter(d => {
+                    const matchText = d.acusado.toLowerCase().includes(search) || d.tema.toLowerCase().includes(search) || d.id.includes(search);
+                    const matchStatus = status === 'all' || d.status === status;
+                    return matchText && matchStatus;
+                }).sort((a,b) => b.timestamp - a.timestamp); // Mais recente primeiro
 
-        window.renderAdminTable = function() {
-            const tbody = document.querySelector('#tabela-admin tbody');
-            tbody.innerHTML = '';
-            const lista = window.appState.denuncias || {};
+                container.innerHTML = "";
 
-            Object.keys(lista).forEach(key => {
-                const item = lista[key];
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${item.data.split(' ')[0]}</td>
-                    <td>${item.denunciante}</td>
-                    <td>${item.acusado}</td>
-                    <td>${item.tema}</td>
-                    <td><span class="status-badge ${getStatusClass(item.status)}">${item.status}</span></td>
-                    <td>
-                        <button class="btn btn-outline" style="padding: 2px 8px; font-size: 0.8rem;" onclick="openEditModal('${key}')">Julgar</button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
+                if(filtered.length === 0) {
+                    container.innerHTML = `<div style="text-align:center; padding:30px; color:#999;">Nenhum processo encontrado com os filtros atuais.</div>`;
+                    return;
+                }
 
-        // Lógica de Julgamento (Modal)
-        window.openEditModal = function(key) {
-            const item = window.appState.denuncias[key];
-            document.getElementById('edit_id').value = key;
-            document.getElementById('edit_status').value = item.status;
-            document.getElementById('edit_decisao').value = item.decisao_final || '';
-            
-            document.getElementById('modal-decisao').style.display = 'flex';
-        }
+                filtered.forEach(d => {
+                    let badge = '';
+                    if(d.status === 'Recebida') badge = 'status-recebida';
+                    else if(d.status === 'Em análise') badge = 'status-analise';
+                    else if(d.status === 'Julgada') badge = 'status-julgada';
+                    else badge = 'status-arquivada';
 
-        window.closeModal = function() {
-            document.getElementById('modal-decisao').style.display = 'none';
-        }
+                    // Se julgada, mostra decisão
+                    const decisaoBlock = d.status === 'Julgada' ? `
+                        <div style="margin-top:15px; padding:15px; background:#f1f8e9; border:1px solid #c5e1a5; border-radius:4px;">
+                            <strong style="color:var(--color-success);">⚖️ DECISÃO FINAL DO SCJ:</strong>
+                            <p>${d.decisao_final}</p>
+                        </div>
+                    ` : '';
 
-        window.saveDecisao = function() {
-            const key = document.getElementById('edit_id').value;
-            const updates = {
-                status: document.getElementById('edit_status').value,
-                decisao_final: document.getElementById('edit_decisao').value
-            };
+                    container.innerHTML += `
+                        <div class="card">
+                            <div style="display:flex; justify-content:space-between; flex-wrap:wrap;">
+                                <h4 style="color:var(--color-scj-blue);">Processo #${d.id.substring(1,8)}</h4>
+                                <span class="status-badge ${badge}">${d.status}</span>
+                            </div>
+                            <h3 style="margin: 5px 0;">Acusado: ${d.acusado}</h3>
+                            <p style="font-size:0.9rem; color:#666;">
+                                <strong>Tema:</strong> ${d.tema} | <strong>Data:</strong> ${d.data_ocorrido}
+                            </p>
+                            <hr style="margin:10px 0; border:0; border-top:1px solid #eee;">
+                            <p><strong>Descrição:</strong> ${d.descricao}</p>
+                            ${decisaoBlock}
+                        </div>
+                    `;
+                });
+            }
+        };
 
-            const denRef = ref(db, `denuncias/${key}`);
-            update(denRef, updates).then(() => {
-                window.showToast("Decisão registrada.", "success");
-                closeModal();
-            });
-        }
+        // --- ADMIN CONTROLLER ---
+        window.AdminController = {
+            login: () => {
+                const pass = document.getElementById('admin-pass-input').value;
+                if(pass === "SCJ_ordem2026") {
+                    State.isAdmin = true;
+                    document.getElementById('admin-login-overlay').style.display = 'none';
+                    document.getElementById('admin-panel').style.display = 'block';
+                    AdminController.renderList();
+                    Utils.toast("Bem-vindo, Excelência.", "success");
+                } else {
+                    Utils.toast("Acesso Negado. Senha Incorreta.", "error");
+                    document.getElementById('admin-pass-input').value = "";
+                }
+            },
+            logout: () => {
+                State.isAdmin = false;
+                document.getElementById('admin-panel').style.display = 'none';
+                document.getElementById('admin-pass-input').value = "";
+                Router.go('home');
+            },
+            switchTab: (tabName) => {
+                document.getElementById('adm-tab-denuncias').style.display = 'none';
+                document.getElementById('adm-tab-notas').style.display = 'none';
+                document.getElementById(`adm-tab-${tabName}`).style.display = 'block';
+                
+                // UI Toggle
+                document.querySelectorAll('.menu-btn').forEach(btn => btn.classList.remove('active-tab'));
+                event.currentTarget.classList.add('active-tab');
+            },
+            renderList: () => {
+                const container = document.getElementById('admin-denuncia-list');
+                container.innerHTML = "";
+                
+                State.denuncias.slice().reverse().forEach(d => {
+                    container.innerHTML += `
+                        <div style="border:1px solid #eee; padding:15px; margin-bottom:10px; border-radius:4px;">
+                            <div style="display:flex; justify-content:space-between;">
+                                <strong>${d.acusado} (${d.tema})</strong>
+                                <small>${d.status}</small>
+                            </div>
+                            <p style="font-size:0.85rem; color:#666; margin:5px 0;">Denunciante: ${d.denunciante}</p>
+                            
+                            ${d.prova && d.prova.length > 50 ? 
+                                `<details style="margin:10px 0;"><summary style="cursor:pointer; color:blue;">Ver Prova Anexada</summary><img src="${d.prova}" style="max-width:100%; margin-top:10px;"></details>` 
+                                : ''}
 
-        // Publicar Nota
-        window.submitNota = function(e) {
-            e.preventDefault();
-            const nota = {
-                titulo: document.getElementById('nota_titulo').value,
-                autor: document.getElementById('nota_autor').value,
-                texto: document.getElementById('nota_texto').value,
-                data: new Date().toLocaleString()
-            };
+                            <div style="margin-top:10px; display:flex; gap:5px;">
+                                <button class="btn" style="padding:5px 10px; font-size:0.7rem; background:#eee;" onclick="AdminController.setStatus('${d.id}', 'Em análise')">Analisar</button>
+                                <button class="btn" style="padding:5px 10px; font-size:0.7rem; background:#ffcdd2; color:#c62828;" onclick="AdminController.setStatus('${d.id}', 'Arquivada')">Arquivar</button>
+                            </div>
+                            
+                            <div style="margin-top:10px; border-top:1px dashed #ccc; padding-top:10px;">
+                                <textarea id="veredito-${d.id}" placeholder="Escrever Sentença/Decisão..." class="form-control" style="font-size:0.8rem; min-height:60px;"></textarea>
+                                <button class="btn btn-primary" style="margin-top:5px; font-size:0.8rem; width:100%;" onclick="AdminController.judge('${d.id}')">PUBLICAR JULGAMENTO</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            },
+            setStatus: (id, status) => {
+                update(ref(db, `denuncias/${id}`), { status: status })
+                    .then(() => Utils.toast(`Status alterado para: ${status}`, "success"));
+            },
+            judge: (id) => {
+                const text = document.getElementById(`veredito-${id}`).value;
+                if(!text) return Utils.toast("Escreva a decisão antes de julgar.", "error");
 
-            const nRef = ref(db, 'notas_oficiais');
-            push(nRef, nota).then(() => {
-                window.showToast("Nota Oficial Publicada.", "success");
-                e.target.reset();
-                window.navigate('notas'); // Redireciona para ver a nota
-            });
-        }
+                update(ref(db, `denuncias/${id}`), { 
+                    status: "Julgada",
+                    decisao_final: text
+                }).then(() => Utils.toast("Julgamento publicado com sucesso!", "success"));
+            },
+            postNote: async (e) => {
+                e.preventDefault();
+                const note = {
+                    titulo: document.getElementById('note-title').value,
+                    autor: document.getElementById('note-author').value,
+                    texto: document.getElementById('note-body').value,
+                    timestamp: Date.now()
+                };
+                
+                try {
+                    await push(ref(db, 'notas_oficiais'), note);
+                    Utils.toast("Nota Oficial publicada!", "success");
+                    e.target.reset();
+                } catch(err) {
+                    Utils.toast("Erro ao publicar nota.", "error");
+                }
+            }
+        };
 
-        // Inicialização inicial
-        renderNotasOficiais();
+        // --- BOOTSTRAP ---
+        App.init();
 
+        // Tornar acessível globalmente (para os onclicks do HTML)
+        window.State = State; 
     </script>
 </body>
 </html>
