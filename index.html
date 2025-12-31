@@ -1,1 +1,955 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Oficial SCJ - República de Brookasil</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* * ==========================================
+         * 🎨 VARIÁVEIS DE TEMA (GABON FLAG INSPIRED)
+         * ==========================================
+         */
+        :root {
+            /* Cores Oficiais */
+            --scj-green: #009E60;   /* Esperança e Justiça */
+            --scj-yellow: #FCD116;  /* Riqueza e Autoridade */
+            --scj-blue: #3A75C4;    /* Mar e Institucional */
+            
+            /* Tons Derivados para UI */
+            --scj-dark-blue: #1A2B45;
+            --scj-dark-green: #004d2e;
+            --scj-gold: #D4AF37;
+            
+            /* Neutros */
+            --text-dark: #1F2937;
+            --text-light: #F9FAFB;
+            --bg-light: #F3F4F6;
+            --bg-white: #FFFFFF;
+            --border-color: #E5E7EB;
+
+            /* Tipografia */
+            --font-serif: 'Merriweather', serif;
+            --font-sans: 'Roboto', sans-serif;
+        }
+
+        /* Modo Alto Contraste */
+        body.high-contrast {
+            --scj-green: #000000;
+            --scj-yellow: #FFFF00;
+            --scj-blue: #00008B;
+            --scj-dark-blue: #000000;
+            --text-dark: #000000;
+            --text-light: #FFFFFF;
+            --bg-light: #FFFFFF;
+            --bg-white: #FFFFFF;
+        }
+
+        /* * ==========================================
+         * 🛠️ RESET E BASE
+         * ==========================================
+         */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        h1, h2, h3, h4 { font-family: var(--font-serif); }
+
+        /* Utilitários */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+        .btn-primary { background: var(--scj-dark-blue); color: white; }
+        .btn-primary:hover { background: var(--scj-blue); }
+        .btn-secondary { background: var(--scj-green); color: white; }
+        .btn-secondary:hover { background: var(--scj-dark-green); }
+        .btn-outline { border: 1px solid var(--scj-dark-blue); color: var(--scj-dark-blue); background: transparent; }
+        
+        .card {
+            background: var(--bg-white);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+            border-top: 4px solid var(--scj-gold);
+            margin-bottom: 20px;
+        }
+
+        /* * ==========================================
+         * 🏛️ CABEÇALHO E NAVEGAÇÃO
+         * ==========================================
+         */
+        header {
+            background: linear-gradient(to right, var(--scj-dark-blue), var(--scj-blue));
+            color: white;
+            padding: 15px 0;
+            border-bottom: 5px solid var(--scj-yellow);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            font-size: 3rem;
+            color: var(--scj-yellow);
+        }
+
+        .titles h1 { font-size: 1.5rem; font-weight: 900; letter-spacing: 1px; }
+        .titles h2 { font-size: 0.8rem; font-weight: 300; text-transform: uppercase; letter-spacing: 2px; }
+
+        .top-bar {
+            background: var(--scj-dark-green);
+            color: white;
+            font-size: 0.8rem;
+            padding: 5px 0;
+            text-align: center;
+        }
+
+        nav {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            display: block;
+            padding: 15px 25px;
+            text-decoration: none;
+            color: var(--scj-dark-blue);
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(58, 117, 196, 0.1);
+            border-bottom-color: var(--scj-green);
+        }
+
+        /* * ==========================================
+         * ♿ ACESSIBILIDADE
+         * ==========================================
+         */
+        .access-panel {
+            background: #f0f0f0;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+            display: none; /* JS toggles this */
+        }
+        
+        .access-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .access-btn {
+            background: white;
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            border-radius: 4px;
+        }
+
+        /* * ==========================================
+         * 📄 CONTEÚDO PRINCIPAL (SPA SECTIONS)
+         * ==========================================
+         */
+        main { padding: 40px 0; min-height: 70vh; }
+        
+        .page-section { display: none; animation: fadeIn 0.5s; }
+        .page-section.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .hero h2 { font-size: 2.5rem; color: var(--scj-dark-blue); margin-bottom: 10px; }
+        .hero p { color: #666; max-width: 600px; margin: 0 auto; }
+
+        /* Formulários */
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 500; color: var(--scj-dark-blue); }
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-family: var(--font-sans);
+        }
+        .form-control:focus { outline: none; border-color: var(--scj-blue); box-shadow: 0 0 0 3px rgba(58,117,196,0.1); }
+        
+        textarea.form-control { min-height: 120px; resize: vertical; }
+
+        /* Termo de Responsabilidade */
+        .term-box {
+            background: #FFF9C4;
+            padding: 15px;
+            border-left: 4px solid var(--scj-yellow);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        /* Tabela e Listas */
+        .data-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .status-recebida { background: #E0E0E0; color: #333; }
+        .status-analise { background: #FFF3CD; color: #856404; }
+        .status-julgada { background: #D4EDDA; color: #155724; }
+        .status-arquivada { background: #F8D7DA; color: #721C24; }
+
+        /* Painel Admin */
+        .admin-login-wrapper { max-width: 400px; margin: 0 auto; }
+        .admin-dashboard { display: none; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.9rem; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background: var(--scj-dark-blue); color: white; }
+        tr:hover { background-color: #f9f9f9; }
+
+        /* Notas Oficiais */
+        .nota-oficial {
+            border-left: 5px solid var(--scj-green);
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .nota-header { border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px; }
+        .nota-meta { color: #666; font-size: 0.85rem; font-style: italic; }
+        .nota-body { font-size: 1.1rem; text-align: justify; }
+        .nota-footer { margin-top: 20px; text-align: right; font-weight: bold; font-family: var(--font-serif); }
+
+        /* Rodapé */
+        footer {
+            background: var(--scj-dark-blue);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: auto;
+            border-top: 5px solid var(--scj-yellow);
+        }
+        .footer-content { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 30px; }
+        .footer-col h4 { color: var(--scj-yellow); margin-bottom: 15px; }
+        .copyright { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.8rem; }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #333;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 4px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transform: translateY(100px);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000;
+        }
+        .toast.show { transform: translateY(0); }
+        .toast.success { border-left: 5px solid var(--scj-green); }
+        .toast.error { border-left: 5px solid #dc3545; }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .header-content { flex-direction: column; text-align: center; }
+            nav ul { flex-direction: column; }
+            nav a { text-align: center; border-bottom: 1px solid #eee; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        REPÚBLICA DE BROOKASIL — DEMOCRACIA, JUSTIÇA E LIBERDADE
+    </div>
+
+    <header>
+        <div class="container header-content">
+            <div class="logo-area">
+                <i class="ph ph-scales logo-icon"></i>
+                <div class="titles">
+                    <h2>Supremo Conselho Judicial</h2>
+                    <h1>SCJ - BROOKASIL</h1>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-outline" style="border-color:white; color: white;" onclick="toggleLang()">
+                    <i class="ph ph-globe"></i> <span id="lang-btn">PT/EN</span>
+                </button>
+                <button class="btn btn-outline" style="border-color:var(--scj-yellow); color: var(--scj-yellow);" onclick="toggleAccessibility()">
+                    <i class="ph ph-wheelchair"></i> <span data-i18n="accessibility">Acessibilidade</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#" onclick="navigate('home')" class="active" data-i18n="nav_home">Início</a></li>
+                <li><a href="#" onclick="navigate('denunciar')" data-i18n="nav_denounce">Realizar Denúncia</a></li>
+                <li><a href="#" onclick="navigate('consulta')" data-i18n="nav_consult">Consulta Pública</a></li>
+                <li><a href="#" onclick="navigate('notas')" data-i18n="nav_notes">Notas Oficiais</a></li>
+                <li><a href="#" onclick="navigate('restrito')" style="color: var(--scj-dark-blue);">🔒 Área Restrita</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="acessibilidade-panel" class="access-panel">
+        <div class="container access-controls">
+            <button class="access-btn" onclick="changeFontSize(1)">A+</button>
+            <button class="access-btn" onclick="changeFontSize(-1)">A-</button>
+            <button class="access-btn" onclick="toggleContrast()">Alto Contraste</button>
+            <button class="access-btn" onclick="toggleAccessibility()">Fechar X</button>
+        </div>
+    </div>
+
+    <main class="container">
+
+        <section id="home" class="page-section active">
+            <div class="hero">
+                <h2 data-i18n="hero_title">Justiça Transparente para Todos</h2>
+                <p data-i18n="hero_subtitle">O canal oficial do cidadão de Brookasil para garantir a integridade da nossa democracia.</p>
+                <div style="margin-top: 30px;">
+                    <button class="btn btn-primary" onclick="navigate('denunciar')" data-i18n="btn_denounce">Fazer Denúncia</button>
+                    <button class="btn btn-secondary" onclick="navigate('consulta')" data-i18n="btn_consult">Consultar Processos</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-bottom: 15px; color: var(--scj-dark-blue);">ℹ️ Como Funciona</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; text-align: center;">
+                    <div>
+                        <i class="ph ph-pencil-simple-line" style="font-size: 2rem; color: var(--scj-green);"></i>
+                        <h4>1. Relate</h4>
+                        <p>Preencha o formulário oficial com provas.</p>
+                    </div>
+                    <div>
+                        <i class="ph ph-gavel" style="font-size: 2rem; color: var(--scj-yellow);"></i>
+                        <h4>2. Julgamento</h4>
+                        <p>O SCJ analisa com base na Constituição.</p>
+                    </div>
+                    <div>
+                        <i class="ph ph-newspaper" style="font-size: 2rem; color: var(--scj-blue);"></i>
+                        <h4>3. Publicação</h4>
+                        <p>Decisões e notas são publicadas aqui.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="denunciar" class="page-section">
+            <h2 style="border-bottom: 2px solid var(--scj-green); padding-bottom: 10px; margin-bottom: 20px;" data-i18n="form_title">Nova Denúncia</h2>
+            
+            <div class="card">
+                <form id="formDenuncia" onsubmit="submitDenuncia(event)">
+                    <div class="grid-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label>Seu Nome (Denunciante)*</label>
+                            <input type="text" id="den_nome" class="form-control" required placeholder="Nome completo">
+                        </div>
+                        <div class="form-group">
+                            <label>Seu Cargo/Ocupação</label>
+                            <input type="text" id="den_cargo" class="form-control" placeholder="Ex: Cidadão, Servidor...">
+                        </div>
+                    </div>
+
+                    <div class="grid-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label>Denunciado (Nome)*</label>
+                            <input type="text" id="reu_nome" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Instituição/Partido do Denunciado</label>
+                            <input type="text" id="reu_inst" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tema da Denúncia*</label>
+                        <select id="den_tema" class="form-control" required>
+                            <option value="">Selecione...</option>
+                            <option value="Abuso de Poder">Abuso de Poder</option>
+                            <option value="Corrupção">Corrupção</option>
+                            <option value="Descumprimento de Leis">Descumprimento de Leis</option>
+                            <option value="Fake News">Fake News</option>
+                            <option value="Ofensas">Ofensas à Honra</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Descrição Detalhada e Artigos Violados*</label>
+                        <textarea id="den_desc" class="form-control" required placeholder="Descreva o ocorrido com detalhes..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Provas (Links de Imagens/Vídeos/Docs)*</label>
+                        <input type="url" id="den_prova" class="form-control" placeholder="https://..." required>
+                        <small style="color: #666;">Insira um link direto para a prova (Imgur, Google Drive, etc).</small>
+                    </div>
+
+                    <div class="term-box">
+                        <label style="display: flex; align-items: start; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" id="den_termo" required style="margin-top: 5px;">
+                            <span>
+                                <strong>TERMO DE RESPONSABILIDADE:</strong> Declaro que as informações acima são verdadeiras sob as penas da lei de Brookasil. Estou ciente que denúncias falsas (falso testemunho) acarretarão em processo reverso e banimento.
+                            </span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                        <i class="ph ph-paper-plane-right"></i> Protocolar Denúncia
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <section id="consulta" class="page-section">
+            <h2 style="margin-bottom: 20px;" data-i18n="nav_consult">Consulta Pública de Processos</h2>
+            
+            <div class="card" style="background: var(--bg-light); border: 1px solid #ddd; padding: 15px;">
+                <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: end;">
+                    <div style="flex: 1;">
+                        <label style="font-size: 0.8rem;">Filtrar por Status</label>
+                        <select id="filtro_status" class="form-control" onchange="renderDenunciasPublicas()">
+                            <option value="todos">Todos</option>
+                            <option value="Recebida">Recebida</option>
+                            <option value="Em Análise">Em Análise</option>
+                            <option value="Julgada">Julgada</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-outline" onclick="renderDenunciasPublicas()"><i class="ph ph-arrows-clockwise"></i> Atualizar</button>
+                </div>
+            </div>
+
+            <div id="lista-denuncias-publica" class="data-grid">
+                <p style="grid-column: 1/-1; text-align: center; color: #666;">Carregando dados do sistema...</p>
+            </div>
+        </section>
+
+        <section id="notas" class="page-section">
+            <div style="text-align: center; margin-bottom: 40px;">
+                <i class="ph ph-seal-check" style="font-size: 3rem; color: var(--scj-green);"></i>
+                <h2>Diário Oficial do SCJ</h2>
+                <p>Comunicados e Decisões da Presidência</p>
+            </div>
+            
+            <div id="lista-notas">
+                </div>
+        </section>
+
+        <section id="restrito" class="page-section">
+            
+            <div id="admin-login" class="admin-login-wrapper card">
+                <h3 style="text-align: center; color: var(--scj-dark-blue); margin-bottom: 20px;">Acesso Magistrados</h3>
+                <form onsubmit="loginAdmin(event)">
+                    <div class="form-group">
+                        <label>Senha de Acesso</label>
+                        <input type="password" id="admin_pass" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Entrar no Sistema</button>
+                </form>
+            </div>
+
+            <div id="admin-dashboard" class="admin-dashboard">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2>Painel de Controle SCJ</h2>
+                    <button class="btn btn-outline" onclick="logoutAdmin()">Sair</button>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <button class="btn btn-secondary" onclick="showAdminTab('processos')">Gerir Processos</button>
+                    <button class="btn btn-primary" onclick="showAdminTab('nova-nota')">Publicar Nota Oficial</button>
+                </div>
+
+                <div id="admin-tab-processos">
+                    <div class="card" style="overflow-x: auto;">
+                        <table id="tabela-admin">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Denunciante</th>
+                                    <th>Acusado</th>
+                                    <th>Tema</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="admin-tab-nova-nota" style="display: none;">
+                    <div class="card">
+                        <h3>Publicar Nota Oficial</h3>
+                        <form onsubmit="submitNota(event)">
+                            <div class="form-group">
+                                <label>Título da Nota</label>
+                                <input type="text" id="nota_titulo" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Autoridade (Assinatura)</label>
+                                <select id="nota_autor" class="form-control" required>
+                                    <option value="Presidente do SCJ">Presidente do SCJ</option>
+                                    <option value="Vice-Presidente do SCJ">Vice-Presidente do SCJ</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Conteúdo da Nota</label>
+                                <textarea id="nota_texto" class="form-control" style="height: 200px;" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Publicar Nota</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <div id="modal-decisao" style="display:none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+        <div class="card" style="width: 90%; max-width: 500px;">
+            <h3>Julgar Processo</h3>
+            <input type="hidden" id="edit_id">
+            <div class="form-group">
+                <label>Novo Status</label>
+                <select id="edit_status" class="form-control">
+                    <option value="Em Análise">Em Análise</option>
+                    <option value="Julgada">Julgada</option>
+                    <option value="Arquivada">Arquivada</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Decisão / Sentença Final</label>
+                <textarea id="edit_decisao" class="form-control" placeholder="Escreva o veredito..."></textarea>
+            </div>
+            <div style="text-align: right;">
+                <button class="btn btn-outline" onclick="closeModal()">Cancelar</button>
+                <button class="btn btn-primary" onclick="saveDecisao()">Salvar Decisão</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast">Mensagem aqui</div>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-col">
+                <h4>SCJ Brookasil</h4>
+                <p>Supremo Conselho Judicial</p>
+                <p>Praça dos Três Poderes, Gabinete 01</p>
+            </div>
+            <div class="footer-col">
+                <h4>Links Úteis</h4>
+                <ul style="list-style: none;">
+                    <li><a href="#" style="color: #ccc; text-decoration: none;">Constituição</a></li>
+                    <li><a href="#" style="color: #ccc; text-decoration: none;">Código Penal</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2024-2025 Supremo Conselho Judicial da República de Brookasil. Todos os direitos reservados.
+        </div>
+    </footer>
+
+    <script type="module">
+        // Importando Firebase SDK (Modular)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, push, onValue, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        // Configuração Firebase
+        const firebaseConfig = {
+            databaseURL: "https://SCJ-brookasil-default-rtdb.firebaseio.com",
+            // Nota: Em produção real, chaves não devem ficar expostas assim. 
+            // Como é um simulador frontend-only solicitado, prosseguimos.
+        };
+
+        // Inicializa Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Estado Global da Aplicação
+        window.appState = {
+            isAdmin: false,
+            lang: 'pt',
+            currentData: {}
+        };
+
+        // Textos para Tradução
+        const i18n = {
+            pt: {
+                nav_home: "Início",
+                nav_denounce: "Realizar Denúncia",
+                nav_consult: "Consulta Pública",
+                nav_notes: "Notas Oficiais",
+                hero_title: "Justiça Transparente para Todos",
+                form_title: "Nova Denúncia"
+            },
+            en: {
+                nav_home: "Home",
+                nav_denounce: "File Complaint",
+                nav_consult: "Public Inquiry",
+                nav_notes: "Official Notes",
+                hero_title: "Transparent Justice for All",
+                form_title: "New Complaint"
+            }
+        };
+
+        // ==========================================
+        // 🧭 NAVEGAÇÃO E UI
+        // ==========================================
+        
+        // Expor funções para o escopo global (HTML onclick)
+        window.navigate = function(sectionId) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Atualizar navegação
+            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+            // Lógica simples para destacar menu (pode ser melhorada)
+            
+            if(sectionId === 'consulta') renderDenunciasPublicas();
+            if(sectionId === 'notas') renderNotasOficiais();
+        }
+
+        window.toggleLang = function() {
+            window.appState.lang = window.appState.lang === 'pt' ? 'en' : 'pt';
+            updateTexts();
+        }
+
+        function updateTexts() {
+            const l = window.appState.lang;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if(i18n[l][key]) el.innerText = i18n[l][key];
+            });
+        }
+
+        // Acessibilidade
+        window.toggleAccessibility = function() {
+            const p = document.getElementById('acessibilidade-panel');
+            p.style.display = p.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        window.changeFontSize = function(delta) {
+            const body = document.body;
+            const currentSize = parseFloat(window.getComputedStyle(body, null).getPropertyValue('font-size'));
+            body.style.fontSize = (currentSize + delta) + 'px';
+        }
+
+        window.toggleContrast = function() {
+            document.body.classList.toggle('high-contrast');
+        }
+
+        window.showToast = function(msg, type = 'success') {
+            const t = document.getElementById('toast');
+            t.innerText = msg;
+            t.className = `toast show ${type}`;
+            setTimeout(() => t.className = 'toast', 3000);
+        }
+
+        // ==========================================
+        // 🔥 LÓGICA DE DADOS (FIREBASE)
+        // ==========================================
+
+        // 1. Enviar Denúncia
+        window.submitDenuncia = function(e) {
+            e.preventDefault();
+            
+            const denuncia = {
+                denunciante: document.getElementById('den_nome').value,
+                cargo_denunciante: document.getElementById('den_cargo').value,
+                acusado: document.getElementById('reu_nome').value,
+                instituicao_acusado: document.getElementById('reu_inst').value,
+                tema: document.getElementById('den_tema').value,
+                descricao: document.getElementById('den_desc').value,
+                prova: document.getElementById('den_prova').value,
+                data: new Date().toLocaleString(),
+                status: 'Recebida',
+                decisao_final: ''
+            };
+
+            const denunciasRef = ref(db, 'denuncias');
+            push(denunciasRef, denuncia)
+                .then(() => {
+                    window.showToast("Denúncia protocolada com sucesso!", "success");
+                    document.getElementById('formDenuncia').reset();
+                    window.navigate('home');
+                })
+                .catch((err) => {
+                    window.showToast("Erro ao enviar: " + err.message, "error");
+                });
+        }
+
+        // 2. Ler Dados (Listener em tempo real)
+        const denunciasRef = ref(db, 'denuncias');
+        onValue(denunciasRef, (snapshot) => {
+            const data = snapshot.val();
+            window.appState.denuncias = data || {};
+            // Se estiver na tela de consulta ou admin, atualiza
+            if(document.getElementById('consulta').classList.contains('active')) renderDenunciasPublicas();
+            if(window.appState.isAdmin) renderAdminTable();
+        });
+
+        const notasRef = ref(db, 'notas_oficiais');
+        onValue(notasRef, (snapshot) => {
+            window.appState.notas = snapshot.val() || {};
+            renderNotasOficiais();
+        });
+
+        // 3. Renderização Pública
+        window.renderDenunciasPublicas = function() {
+            const container = document.getElementById('lista-denuncias-publica');
+            const filtro = document.getElementById('filtro_status').value;
+            container.innerHTML = '';
+
+            const lista = window.appState.denuncias;
+            
+            if(!lista) {
+                container.innerHTML = '<p>Nenhuma denúncia encontrada.</p>';
+                return;
+            }
+
+            Object.keys(lista).reverse().forEach(key => {
+                const item = lista[key];
+                
+                // Filtro
+                if(filtro !== 'todos' && item.status !== filtro) return;
+
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.style.borderTopColor = getStatusColor(item.status);
+                
+                let html = `
+                    <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                        <span class="status-badge ${getStatusClass(item.status)}">${item.status}</span>
+                        <small>${item.data}</small>
+                    </div>
+                    <h4>Processo contra: ${item.acusado}</h4>
+                    <p style="font-size:0.9rem; color:#666;">Tema: ${item.tema}</p>
+                    <hr style="margin: 10px 0; border:0; border-top:1px solid #eee;">
+                    <p><strong>Descrição:</strong> ${item.descricao.substring(0, 100)}...</p>
+                `;
+
+                if(item.status === 'Julgada' && item.decisao_final) {
+                    html += `
+                        <div style="background:#f9f9f9; padding:10px; margin-top:10px; border-left:3px solid var(--scj-green);">
+                            <strong>⚖️ Veredito SCJ:</strong><br>
+                            ${item.decisao_final}
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = html;
+                container.appendChild(card);
+            });
+        }
+
+        window.renderNotasOficiais = function() {
+            const container = document.getElementById('lista-notas');
+            container.innerHTML = '';
+            const lista = window.appState.notas;
+
+            if(!lista) return;
+
+            Object.keys(lista).reverse().forEach(key => {
+                const nota = lista[key];
+                const div = document.createElement('div');
+                div.className = 'nota-oficial';
+                div.innerHTML = `
+                    <div class="nota-header">
+                        <h3 style="font-family: var(--font-serif); font-size: 1.5rem;">${nota.titulo}</h3>
+                        <div class="nota-meta">Publicado em: ${nota.data}</div>
+                    </div>
+                    <div class="nota-body">
+                        ${nota.texto.replace(/\n/g, '<br>')}
+                    </div>
+                    <div class="nota-footer">
+                        ${nota.autor}<br>
+                        SUPREMO CONSELHO JUDICIAL
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Helpers de Estilo
+        function getStatusColor(status) {
+            if(status === 'Julgada') return 'var(--scj-green)';
+            if(status === 'Arquivada') return '#dc3545';
+            if(status === 'Em Análise') return 'var(--scj-yellow)';
+            return '#ccc';
+        }
+
+        function getStatusClass(status) {
+            if(status === 'Julgada') return 'status-julgada';
+            if(status === 'Arquivada') return 'status-arquivada';
+            if(status === 'Em Análise') return 'status-analise';
+            return 'status-recebida';
+        }
+
+        // ==========================================
+        // 🔐 ÁREA ADMIN
+        // ==========================================
+
+        window.loginAdmin = function(e) {
+            e.preventDefault();
+            const pass = document.getElementById('admin_pass').value;
+            if(pass === 'SCJ_ordem2026') {
+                window.appState.isAdmin = true;
+                document.getElementById('admin-login').style.display = 'none';
+                document.getElementById('admin-dashboard').style.display = 'block';
+                renderAdminTable();
+                window.showToast("Login efetuado com autoridade SCJ.", "success");
+            } else {
+                window.showToast("Acesso Negado. Senha incorreta.", "error");
+            }
+        }
+
+        window.logoutAdmin = function() {
+            window.appState.isAdmin = false;
+            document.getElementById('admin_pass').value = '';
+            document.getElementById('admin-login').style.display = 'block';
+            document.getElementById('admin-dashboard').style.display = 'none';
+        }
+
+        window.showAdminTab = function(tabName) {
+            document.getElementById('admin-tab-processos').style.display = tabName === 'processos' ? 'block' : 'none';
+            document.getElementById('admin-tab-nova-nota').style.display = tabName === 'nova-nota' ? 'block' : 'none';
+        }
+
+        window.renderAdminTable = function() {
+            const tbody = document.querySelector('#tabela-admin tbody');
+            tbody.innerHTML = '';
+            const lista = window.appState.denuncias || {};
+
+            Object.keys(lista).forEach(key => {
+                const item = lista[key];
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${item.data.split(' ')[0]}</td>
+                    <td>${item.denunciante}</td>
+                    <td>${item.acusado}</td>
+                    <td>${item.tema}</td>
+                    <td><span class="status-badge ${getStatusClass(item.status)}">${item.status}</span></td>
+                    <td>
+                        <button class="btn btn-outline" style="padding: 2px 8px; font-size: 0.8rem;" onclick="openEditModal('${key}')">Julgar</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Lógica de Julgamento (Modal)
+        window.openEditModal = function(key) {
+            const item = window.appState.denuncias[key];
+            document.getElementById('edit_id').value = key;
+            document.getElementById('edit_status').value = item.status;
+            document.getElementById('edit_decisao').value = item.decisao_final || '';
+            
+            document.getElementById('modal-decisao').style.display = 'flex';
+        }
+
+        window.closeModal = function() {
+            document.getElementById('modal-decisao').style.display = 'none';
+        }
+
+        window.saveDecisao = function() {
+            const key = document.getElementById('edit_id').value;
+            const updates = {
+                status: document.getElementById('edit_status').value,
+                decisao_final: document.getElementById('edit_decisao').value
+            };
+
+            const denRef = ref(db, `denuncias/${key}`);
+            update(denRef, updates).then(() => {
+                window.showToast("Decisão registrada.", "success");
+                closeModal();
+            });
+        }
+
+        // Publicar Nota
+        window.submitNota = function(e) {
+            e.preventDefault();
+            const nota = {
+                titulo: document.getElementById('nota_titulo').value,
+                autor: document.getElementById('nota_autor').value,
+                texto: document.getElementById('nota_texto').value,
+                data: new Date().toLocaleString()
+            };
+
+            const nRef = ref(db, 'notas_oficiais');
+            push(nRef, nota).then(() => {
+                window.showToast("Nota Oficial Publicada.", "success");
+                e.target.reset();
+                window.navigate('notas'); // Redireciona para ver a nota
+            });
+        }
+
+        // Inicialização inicial
+        renderNotasOficiais();
+
+    </script>
+</body>
+</html>
