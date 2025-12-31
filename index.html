@@ -441,10 +441,14 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Provas (Links de Imagens/Vídeos/Docs)*</label>
-                        <input type="url" id="den_prova" class="form-control" placeholder="https://..." required>
-                        <small style="color: #666;">Insira um link direto para a prova (Imgur, Google Drive, etc).</small>
-                    </div>
+    <label>Provas (Upload de Imagem ou Vídeo)*</label>
+    <input type="file" id="den_arquivo" class="form-control" accept="image/*,video/*" required>
+    <small style="color: #666;">Selecione um arquivo de imagem ou vídeo diretamente do seu dispositivo.</small>
+    
+    <div id="upload_progress_container" style="width: 100%; background: #eee; height: 8px; margin-top: 10px; border-radius: 4px; display: none;">
+        <div id="upload_bar" style="width: 0%; height: 100%; background: var(--scj-green); border-radius: 4px; transition: width 0.3s;"></div>
+    </div>
+</div>
 
                     <div class="term-box">
                         <label style="display: flex; align-items: start; gap: 10px; cursor: pointer;">
@@ -616,18 +620,13 @@
     <script type="module">
         // Importando Firebase SDK (Modular)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, push, onValue, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { getDatabase, ref, push, onValue, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+// NOVA IMPORTAÇÃO OBRIGATÓRIA PARA UPLOAD
+import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
-        // Configuração Firebase
-        const firebaseConfig = {
-            databaseURL: "https://SCJ-brookasil-default-rtdb.firebaseio.com",
-            // Nota: Em produção real, chaves não devem ficar expostas assim. 
-            // Como é um simulador frontend-only solicitado, prosseguimos.
-        };
-
-        // Inicializa Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const storage = getStorage(app); // Inicialização do Storage
 
         // Estado Global da Aplicação
         window.appState = {
@@ -714,29 +713,72 @@
         // ==========================================
 
         // 1. Enviar Denúncia
-        window.submitDenuncia = function(e) {
-            e.preventDefault();
-            
-            const denuncia = {
-                denunciante: document.getElementById('den_nome').value,
-                cargo_denunciante: document.getElementById('den_cargo').value,
-                acusado: document.getElementById('reu_nome').value,
-                instituicao_acusado: document.getElementById('reu_inst').value,
-                tema: document.getElementById('den_tema').value,
-                descricao: document.getElementById('den_desc').value,
-                prova: document.getElementById('den_prova').value,
-                data: new Date().toLocaleString(),
-                status: 'Recebida',
-                decisao_final: ''
-            };
+     window.submitDenuncia = function(e) {
+    e.preventDefault();
+    
+    const fileInput = document.getElementById('den_arquivo');
+    const file = fileInput.files[0];
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    const progressBar = document.getElementById('upload_bar');
+    const progressContainer = document.getElementById('upload_progress_container');
 
-            const denunciasRef = ref(db, 'denuncias');
-            push(denunciasRef, denuncia)
-                .then(() => {
-                    window.showToast("Denúncia protocolada com sucesso!", "success");
+    if (!file) {
+        window.showToast("Por favor, selecione um arquivo.", "error");
+        return;
+    }
+
+    // Desativa botão e mostra progresso
+    submitBtn.disabled = true;
+    progressContainer.style.display = 'block';
+
+    // 1. Define o caminho único no Storage
+    const storagePath = `provas/${Date.now()}_${file.name}`;
+    const storageReference = sRef(storage, storagePath);
+
+    // 2. Executa o upload real do arquivo
+    const uploadTask = uploadBytesResumable(storageReference, file);
+
+    uploadTask.on('state_changed', 
+        (snapshot) => {
+            // Atualiza a barra de progresso visual
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            progressBar.style.width = progress + '%';
+        }, 
+        (error) => {
+            window.showToast("Erro no upload: " + error.message, "error");
+            submitBtn.disabled = false;
+        }, 
+        () => {
+            // 3. Após sucesso no Storage, salva as informações no Database
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                const denuncia = {
+                    denunciante: document.getElementById('den_nome').value,
+                    cargo_denunciante: document.getElementById('den_cargo').value,
+                    acusado: document.getElementById('reu_nome').value,
+                    instituicao_acusado: document.getElementById('reu_inst').value,
+                    tema: document.getElementById('den_tema').value,
+                    descricao: document.getElementById('den_desc').value,
+                    data: new Date().toLocaleString(),
+                    status: 'Recebida',
+                    // Requisitos: Nome, Tipo e Caminho no Storage
+                    arquivo_nome: file.name,
+                    arquivo_tipo: file.type.startsWith('video') ? 'vídeo' : 'imagem',
+                    arquivo_storage_path: storagePath,
+                    arquivo_url: downloadURL // Link gerado para visualização
+                };
+
+                const denunciasRef = ref(db, 'denuncias');
+                push(denunciasRef, denuncia).then(() => {
+                    window.showToast("Denúncia e arquivo enviados com sucesso!", "success");
                     document.getElementById('formDenuncia').reset();
+                    progressContainer.style.display = 'none';
+                    submitBtn.disabled = false;
                     window.navigate('home');
-                })
+                });
+            });
+        }
+    );
+}
                 .catch((err) => {
                     window.showToast("Erro ao enviar: " + err.message, "error");
                 });
